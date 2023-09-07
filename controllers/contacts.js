@@ -3,6 +3,9 @@ const { HttpError, HttpResponse, ctrlWrapper } = require("../helpers");
 
 const getAll = async (req, res) => {
   const result = await contacts.listContacts();
+  if (!result) {
+    throw HttpError(500, "Internal server error");
+  }
   res.json(HttpResponse("success", 200, result));
 };
 
@@ -19,7 +22,7 @@ const getById = async (req, res) => {
 const add = async (req, res) => {
   const result = await contacts.addContact(req.body);
   if (!result) {
-    throw HttpError();
+    throw HttpError(500, "Internal server error");
   }
   res.status(201).json(HttpResponse("success", 201, result));
 };
