@@ -1,12 +1,12 @@
 const contacts = require("../models/contacts");
-const { HttpError, HttpResponse, ctrlWrapper } = require("../helpers");
+const { HttpError, ctrlWrapper } = require("../helpers");
 
 const getAll = async (req, res) => {
   const result = await contacts.listContacts();
   if (!result) {
     throw HttpError(500, "Internal server error");
   }
-  res.json(HttpResponse("success", 200, result));
+  res.json(result);
 };
 
 const getById = async (req, res) => {
@@ -16,7 +16,7 @@ const getById = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.json(HttpResponse("success", 200, result));
+  res.json(result);
 };
 
 const add = async (req, res) => {
@@ -24,7 +24,7 @@ const add = async (req, res) => {
   if (!result) {
     throw HttpError(500, "Internal server error");
   }
-  res.status(201).json(HttpResponse("success", 201, result));
+  res.status(201).json(result);
 };
 
 const deleteById = async (req, res) => {
@@ -35,7 +35,7 @@ const deleteById = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.json(HttpResponse("success", 200, result));
+  res.json({ message: "contact deleted" });
 };
 
 const updateById = async (req, res) => {
@@ -45,7 +45,7 @@ const updateById = async (req, res) => {
     throw HttpError(404, "Not found");
   }
 
-  res.json(HttpResponse("success", 200, result));
+  res.json(result);
 };
 
 module.exports = {
