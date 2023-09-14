@@ -13,7 +13,7 @@ const addSchemaErrorMessages = {
 
 const updateFavoriteSchemaErrorMessages = {
   "any.required": "missing field favorite",
-  "object.min": "missing field favorite",
+  "object.min": "missings field favorite",
 };
 
 const addSchema = Joi.object()
