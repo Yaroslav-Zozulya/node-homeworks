@@ -7,7 +7,7 @@ const addSchemaErrorMessages = {
   "string.empty": "Field {#label} cannot be empty.",
   "string.email": "Field {#label} must be a valid email address.",
   "string.pattern.base": "Field {#label} must be in the format 000-000-00-00",
-  "any.required": "missings required {#label} field",
+  "any.required": "missing required {#label} field",
 };
 
 const addSchema = Joi.object({
