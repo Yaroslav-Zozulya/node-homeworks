@@ -3,9 +3,6 @@ const { Contact } = require("../models/contact");
 
 const getAll = async (req, res) => {
   const result = await Contact.find();
-  if (!result) {
-    throw HttpError(500, "Internal server error");
-  }
   res.json(result);
 };
 
@@ -20,9 +17,6 @@ const getById = async (req, res) => {
 
 const add = async (req, res) => {
   const result = await Contact.create(req.body);
-  if (!result) {
-    throw HttpError(500, "Internal server error");
-  }
   res.status(201).json(result);
 };
 
