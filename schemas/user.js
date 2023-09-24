@@ -13,7 +13,12 @@ const loginSchema = Joi.object({
   password: Joi.string().min(6).required(),
 }).messages({ "any.required": "missing required {#label} field" });
 
+const updateSubscriptionSchema = Joi.object({
+  subscription: Joi.string().valid("starter", "pro", "business").required(),
+}).messages({ "any.required": "missing required {#label} field" });
+
 module.exports = {
   registerSchema,
   loginSchema,
+  updateSubscriptionSchema,
 };
