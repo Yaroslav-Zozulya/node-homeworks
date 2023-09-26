@@ -11,11 +11,6 @@ const addSchemaErrorMessages = {
   "any.required": "missing required {#label} field",
 };
 
-const updateFavoriteSchemaErrorMessages = {
-  "any.required": "missing field favorite",
-  "object.min": "missing field favorite",
-};
-
 const addSchema = Joi.object()
   .min(1)
   .when(Joi.object().min(1), {
@@ -27,6 +22,11 @@ const addSchema = Joi.object()
     }),
   })
   .messages(addSchemaErrorMessages);
+
+const updateFavoriteSchemaErrorMessages = {
+  "any.required": "missing field favorite",
+  "object.min": "missing field favorite",
+};
 
 const updateFavoriteSchema = Joi.object()
   .min(1)
