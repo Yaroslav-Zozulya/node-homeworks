@@ -4,7 +4,7 @@ const app = require("../app");
 const { User } = require("../models/user");
 require("dotenv").config();
 
-const { DB_HOST_TEST } = process.env;
+const { DB_HOST_TEST, PORT_TEST } = process.env;
 
 const validUser = {
   email: "test1@gmail.com",
@@ -22,7 +22,7 @@ describe("Test login controller", () => {
   let responseError;
 
   beforeAll(async () => {
-    server = app.listen(3000);
+    server = app.listen(PORT_TEST);
     await mongoose.connect(DB_HOST_TEST).then();
     await request(app).post("/api/users/register").send(validUser);
     response = await request(app).post("/api/users/login").send(validUser);

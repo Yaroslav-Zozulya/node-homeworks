@@ -1,6 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const gravatar = require("gravatar");
+const Jimp = require("jimp");
 const path = require("path");
 const fs = require("fs/promises");
 const { HttpError, ctrlWrapper } = require("../helpers");
@@ -24,8 +25,10 @@ const register = async (req, res) => {
   });
 
   res.status(201).json({
-    email: newUser.email,
-    subscription: newUser.subscription,
+    user: {
+      email: newUser.email,
+      subscription: newUser.subscription,
+    },
   });
 };
 
@@ -81,11 +84,21 @@ const updateSubscription = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id } = req.user;
   const { path: tempUpload, originalname } = req.file;
+
   const filename = `${_id}_${originalname}`;
   const resultUpload = path.join(avatarsDir, filename);
+
+  // Загрузка изображения с помощью Jimp
+
   await fs.rename(tempUpload, resultUpload);
+
+  const avatar = await Jimp.read(resultUpload);
+  const resizeAvatar = await avatar.resize(250, 250);
+  await resizeAvatar.write(resultUpload);
+
   const avatarURL = path.join("avatars", filename);
   await User.findByIdAndUpdate(_id, { avatarURL });
+
   res.json({ avatarURL });
 };
 
