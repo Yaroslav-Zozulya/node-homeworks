@@ -36,7 +36,6 @@ describe("Test login controller", () => {
     await server.close();
     await mongoose.connection.close();
   });
-
   test("status code - 200", () => {
     expect(response.statusCode).toBe(200);
   });
