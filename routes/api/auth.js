@@ -4,6 +4,7 @@ const {
   registerSchema,
   loginSchema,
   updateSubscriptionSchema,
+  emailSchema,
 } = require("../../schemas/user");
 const {
   register,
@@ -12,6 +13,8 @@ const {
   logout,
   updateSubscription,
   updateAvatar,
+  verifyEmail,
+  resendVerifyEmail,
 } = require("../../controllers/auth");
 
 const router = express.Router();
@@ -27,5 +30,7 @@ router.patch(
   updateSubscription
 );
 router.patch("/avatars", authenticate, upload.single("avatar"), updateAvatar);
+router.get("/verify/:verificationToken", verifyEmail);
+router.post("/verify", validateBody(emailSchema), resendVerifyEmail);
 
 module.exports = router;

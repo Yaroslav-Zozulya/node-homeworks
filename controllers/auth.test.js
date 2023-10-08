@@ -24,7 +24,11 @@ describe("Test login controller", () => {
   beforeAll(async () => {
     server = app.listen(PORT_TEST);
     await mongoose.connect(DB_HOST_TEST).then();
+
     await request(app).post("/api/users/register").send(validUser);
+    const user = await User.findOne({ email: validUser.email });
+
+    await request(app).get(`/api/users/verify/${user.verificationToken}`);
     response = await request(app).post("/api/users/login").send(validUser);
     responseError = await request(app)
       .post("/api/users/login")
